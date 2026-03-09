@@ -1,14 +1,15 @@
 ## ----Install-packages---------------------------------------------------------
-#load one at a time
+# Load one at a time
 install.packages("tidycensus")
 install.packages("tidyverse")
-install.packages(c("sf", "tigris"))
 install.packages("leaflet") 
 install.packages("htmlwidgets")
 install.packages("htmltools")
+#loads two at a time
+install.packages(c("sf", "tigris"))
 
 ## ----Load Libraries-----------------------------------------------------------
-#load one at a time
+# Load one at a time
 library(tidycensus)
 library(tidyverse)
 library(sf)
@@ -18,26 +19,33 @@ library(htmlwidgets)
 library(htmltools)
 
 
+## ----Get the ACS5 Data--------------------------------------------------------
+# For ACS5 find a variable of interest.
+ACS5_2024_variables <- load_variables(2024, "acs5", cache = TRUE)
+View(ACS5_2024_variables)
 
-#for ACS5 fiund a variable of interest.
-ACS5_2023_variables <- load_variables(2023, "acs5", cache = TRUE)
-View(ACS5_2023_variables)
 
+#	Replace the B19013_001 with your own indicator
+# Note I called the result myVariable
+# B19013_001 is Median household income in the past 12 months
+#  (in 2024 inflation-adjusted dollars)
 
-#	 Replace the B19013_001 with your own indicator
-# note I called the result myVariable
-myVariable <- get_acs(geography = "county", 
-                          variables = "B19013_001",
-                          state = "Iowa", 
-                          output = "wide",
-                          geometry = TRUE, 
-                          survey = "acs5",
-                          year = 2023)
-#Look at the data frame and notice only 10 results!
+myVariable <- get_acs(
+  survey = "acs5",
+  year = 2024,
+  variables = "B19013_001",
+  state = "Iowa", 
+  geography = "place", #could use county, tract, block group, place
+  output = "wide",
+  geometry = TRUE
+)
+# Look at the data frame and notice only 10 results!
 view(myVariable)
+(myVariable)
 
-#optionally if you want to use this in Tableau you can save it as a geoJSON
-st_write(myVariable, "WednesdayDemo2.geojson")
+# Optionally if you want to use this in Tableau you can save it as a geoJSON
+# but make sure you have first gone to session --> Set Working Directory!
+st_write(myVariable, "someFileName.geojson")
 
 
 
