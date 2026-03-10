@@ -57,7 +57,7 @@ st_write(myVariable, "someFileName.geojson")
 
 
 
-## ----Alternative if you wanted just sities in a county------------------------
+## ----Alternative if you wanted just cities in a county------------------------
 # Get all places in the state with geometry
 myVariable <- get_acs(
   survey = "acs5",
