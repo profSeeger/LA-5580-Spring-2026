@@ -35,17 +35,50 @@ myVariable <- get_acs(
   year = 2024,
   variables = "B19013_001",
   state = "Iowa", 
-  geography = "place", #could use county, tract, block group, place
+  county = "Boone", #remove this line will get entire state
+  geography = "tract", #could use county, tract, block group, place
   output = "wide",
   geometry = TRUE
 )
-# Look at the data frame and notice only 10 results!
+# Look at the data frame and notice the number of results!
 view(myVariable)
-(myVariable)
+
+#view as a map
+# Quick plots of all four columns as a preview
+plot(myVariable)
+
+# quick plot of just the estimate
+plot(myVariable["B19013_001E"])
 
 # Optionally if you want to use this in Tableau you can save it as a geoJSON
 # but make sure you have first gone to session --> Set Working Directory!
 st_write(myVariable, "someFileName.geojson")
+
+
+
+
+## ----Alternative if you wanted just sities in a county------------------------
+# Get all places in the state with geometry
+myVariable <- get_acs(
+  survey = "acs5",
+  year = 2024,
+  variables = "B19013_001",
+  state = "Iowa", 
+  geography = "place", #could use county, tract, block group, place
+  output = "wide",
+  geometry = TRUE
+)
+
+# Get the county boundary for Story County
+county <- counties(state = "IA", cb = TRUE) |>
+  filter(NAME == "Story")
+
+# Spatially filter places that intersect the county
+cities_in_county <- myVariable[st_intersects(myVariable, county, sparse = FALSE)[,1], ]
+plot(cities_in_county["B19013_001E"]) #just to preview the data
+myVariable <- cities_in_county
+
+
 
 
 
