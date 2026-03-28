@@ -112,7 +112,7 @@ myMap
 install.packages("htmlwidgets")
 library(htmlwidgets)
 
-# Save the map as an HTML widget
+# Save the map as an HTML widget - however make sure you have set your working directory first!
 saveWidget(myMap, file = "IowaHouseholdIncome_v2.html")
 
 
