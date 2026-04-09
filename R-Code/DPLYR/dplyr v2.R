@@ -66,7 +66,7 @@ scores_Perry <-  scores %>% filter(District.Name == "Perry" & School.Year == 201
 #Filter for a year and grade
 scores_Same <-  scores %>% filter(School.Year == 2016 & Grade == 3)
 
-#Filter for a year
+#Filter for a year and other characteristics
 scores_Gilbert <-  scores %>% filter(Topic == "Math" & School.Year == 2010 & Grade == 3 & District.Name == "Gilbert")
 
 #Filter for a found error
