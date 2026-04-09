@@ -6,7 +6,7 @@ library(tidyverse)
 
 ## ----Setup and Load Data------------------------------------------------------
 
-#the original data for this demo came from https://data.iowa.gov/Primary-Secondary-Ed/Math-And-Reading-Proficiency-in-Iowa-by-School-Yea/f3h8-mnxi/data_preview
+# The original data for this demo came from https://data.iowa.gov/Primary-Secondary-Ed/Math-And-Reading-Proficiency-in-Iowa-by-School-Yea/f3h8-mnxi/data_preview
 
 # Save file
 # Set your script to use 
@@ -60,14 +60,14 @@ scores_mean_math <- scores_clean2 %>%
 
 
 #
-#Filter for a year
+#Filter for a district and school year
 scores_Perry <-  scores %>% filter(District.Name == "Perry" & School.Year == 2013)
 
-#Filter for a year
+#Filter for a year and grade
 scores_Same <-  scores %>% filter(School.Year == 2016 & Grade == 3)
 
 #Filter for a year
-scores_Gilbert <-  scores %>% filter(Topic == "Math" & School.Year == 2010 & Grade == 3)
+scores_Gilbert <-  scores %>% filter(Topic == "Math" & School.Year == 2010 & Grade == 3 & District.Name == "Gilbert")
 
-#Filter for a year
+#Filter for a found error
 scores_Error <-  scores %>% filter(Total == 16 & Proficient == 12 & Grade == 3)
