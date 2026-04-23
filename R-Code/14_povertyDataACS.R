@@ -56,3 +56,8 @@ df <- bind_rows(poverty_est_df23, poverty_est_df18, poverty_est_df13)
 
 
 write_xlsx(df, "povertyDataACS.xlsx", col_names=TRUE)
+
+#alternate to write individual XLS files
+write_xlsx(poverty_est_df23, "povertyDataACS23.xlsx", col_names=TRUE)
+write_xlsx(poverty_est_df18, "povertyDataACS18.xlsx", col_names=TRUE)
+write_xlsx(poverty_est_df13, "povertyDataACS13.xlsx", col_names=TRUE)
