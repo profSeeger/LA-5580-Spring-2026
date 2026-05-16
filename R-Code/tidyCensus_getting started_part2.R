@@ -55,22 +55,72 @@ View(ACS5_2024_variables)
 # Save the results of this in data frame which I am calling something like poverty_df
 
 #Example looking at ACS1 data, remove the survey = "acs1" to use acs5
-poverty_est_df <- get_acs(geography = "county", 
-              variables = "B05010_001",
+degree_est_df <- get_acs(geography = "county", 
+              variables = "B15012_001",
               state = "Iowa", 
               output = "wide",
               geometry = TRUE, 
-              survey = "acs1",
+              survey = "acs5",
               year = 2024)
 #look at the data frame and notice only 10 results!
-view(poverty_est_df)
+view(degree_est_df)
+
+
+
+
+#now get the B05010_002 total number with a ratio value below 1
+degree_cs_math_stat_df <- get_acs(geography = "county", 
+                             variables = "B15012_002",
+                             state = "Iowa", 
+                             output = "wide",
+                             geometry = TRUE,
+                             survey = "acs5",
+                             year = 2024)
+mapview(degree_cs_math_stat_df)
+
+
+
+
+
+#now get the B05010_002 total number with a ratio value below 1
+degree_eng_df <- get_acs(geography = "county", 
+                                  variables = "B15012_007",
+                                  state = "Iowa", 
+                                  output = "wide",
+                                  geometry = TRUE,
+                                  survey = "acs5",
+                                  year = 2024)
+#mapview(degree_eng_df)
+
+
+
+
+
+
+
+
+
+#now get the B05010_002 total number with a ratio value below 1
+degree_bus_df <- get_acs(geography = "county", 
+                         variables = "B15012_010",
+                         state = "Iowa", 
+                         output = "wide",
+                         geometry = TRUE,
+                         survey = "acs5",
+                         year = 2024)
+#mapview(degree_bus_df)
+
+
+
+
+
 
 #maybe preview this as a map
 #add Mapview package and library. In the future include this at the top of script!
 install.packages("mapview")
 library(mapview)
 
-mapview(poverty_est_df)
+mapview(degree_est_df)
 
 
 
@@ -81,44 +131,46 @@ mapview(poverty_est_df)
 getwd() #this will display your working directory
 
 #Get the ACS5 data, remove the survey = "acs1" to use acs5
-poverty_est_df <- get_acs(geography = "county", 
-                          variables = "B05010_001",
+degree_est_df <- get_acs(geography = "county", 
+                          variables = "B15012_001",
                           state = "Iowa", 
                           output = "wide",
                           geometry = TRUE,
                           year = 2024)
-mapview(poverty_est_df)
+mapview(degree_est_df)
 
 
 
 
 #now get the B05010_002 total number with a ratio value below 1
-poverty_under1_df <- get_acs(geography = "county", 
-                          variables = "B05010_002",
+degree_cs_math_stat_df <- get_acs(geography = "county", 
+                          variables = "	B15012_002",
                           state = "Iowa", 
                           output = "wide",
                           geometry = TRUE,
                           year = 2024)
-mapview(poverty_under1_df)
+mapview(degree_cs_math_stat_df)
 
 
 #but now we have two data frames, it would be better if we had this in just one
-poverty_df <- get_acs(geography = "county", 
-                      variables = c(poverty_est = "B05010_001",
-                                    poverty_und1 = "B05010_002"),
+bs_degree_df <- get_acs(geography = "county", 
+                      variables = c(all_degree = "B15012_001",
+                                    cs_math_stat = "B15012_002",
+                                    eng_degree = "B15012_007",
+                                    bus_degree = "B15012_010"),
                       state = "Iowa", 
                       output = "wide",
                       geometry = TRUE,
                      year = 2024)
-view(poverty_df)
-mapview(poverty_df)
+view(bs_degree_df)
+mapview(bs_degree_df)
 
 #Looks good so we can create a shapefile
-st_write(poverty_df, "iowa_poverty.shp")
+st_write(bs_degree_df, "iowa_bs_degree.shp")
 
 #note error message about ESRI field name abbreviation
 #so save as a geojson!
-st_write(poverty_df, "iowa_poverty.geojson")
+st_write(bs_degree_df, "iowa_bs_degree.geojson")
 
 #If we just wanted the data as a CSV, we could run the code above with geometry = FALSE
 poverty_df_noGeo <- get_acs(geography = "county", 
